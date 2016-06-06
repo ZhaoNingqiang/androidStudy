@@ -2,43 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/page_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="100dp"
     android:background="@android:color/white"
-    android:fitsSystemWindows="true"
+    android:orientation="horizontal"
     tools:context="com.example.ningqiangzhao.study.MainActivity">
 
-    <LinearLayout
+    <ImageSwitcher
+        android:src="@drawable/img1"
+        android:id="@+id/is_left"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center_vertical" />
+
+    <com.example.ningqiangzhao.study.widget.MyViewPager
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:background="@android:color/darker_gray"
-        android:orientation="horizontal">
-
-        <RelativeLayout
-            android:layout_width="180dp"
-            android:layout_height="120dp"
-            android:background="@android:color/holo_blue_dark">
-
-            <ImageView
-                android:id="@+id/iv_heard"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/ic_launcher"
-                android:layout_width="80dp"
-                android:layout_height="80dp" />
-
-            <TextView
-                android:layout_toRightOf="@id/iv_heard"
-                android:textSize="18sp"
-                android:text="title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:text="对评测员的描述"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
+        android:layout_height="100dp"
+        android:clipChildren="false" />
 
 </LinearLayout>
