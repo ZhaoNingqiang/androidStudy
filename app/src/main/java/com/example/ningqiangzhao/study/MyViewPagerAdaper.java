@@ -9,7 +9,8 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 
 /**
- * @description: author:zhaoningqiang
+ * @description:
+ * author:zhaoningqiang
  * @time 16/6/6/下午2:49
  */
 public class MyViewPagerAdaper extends PagerAdapter {
@@ -24,7 +25,7 @@ public class MyViewPagerAdaper extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return data.size();
+        return data == null ? 0 : Integer.MAX_VALUE;
     }
 
     @Override
@@ -37,10 +38,9 @@ public class MyViewPagerAdaper extends PagerAdapter {
         View v = View.inflate(context, R.layout.page_image_item, null);
 
         ImageView imageView = (ImageView) v.findViewById(R.id.iv_item);
+        imageView.setImageResource(data.get(position%data.size()));
+            container.addView(v);
 
-
-        imageView.setImageResource(data.get(position));
-        container.addView(v);
         return v;
     }
 
