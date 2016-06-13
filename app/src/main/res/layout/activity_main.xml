@@ -4,22 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/page_container"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:context="com.example.ningqiangzhao.study.MainActivity">
-
-    <ImageSwitcher
-        android:src="@drawable/img1"
-        android:id="@+id/is_left"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center_vertical" />
-
-    <com.example.ningqiangzhao.study.widget.MyViewPager
-        android:id="@+id/viewpager"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:clipChildren="false" />
+        android:layout_height="100dp">
+
+        <com.example.ningqiangzhao.study.widget.MyImageView
+            android:src="@drawable/img1"
+            android:id="@+id/is_left"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_vertical" />
+
+        <com.example.ningqiangzhao.study.widget.MyViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:clipChildren="false" />
+
+    </LinearLayout>
+
+  <com.example.ningqiangzhao.study.widget.MyTextView
+      android:id="@+id/textview"
+      android:text="上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent" />
 
 </LinearLayout>
