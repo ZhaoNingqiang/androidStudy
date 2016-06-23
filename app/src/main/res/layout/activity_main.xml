@@ -1,37 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/page_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:orientation="vertical"
-    tools:context="com.example.ningqiangzhao.study.MainActivity">
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="100dp">
+    android:orientation="vertical">
+    <com.engin.widget.QuotationTextView
+        android:padding="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1234567890abcdefghijklmnopqrstABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        />
+    <TextView
 
-        <com.example.ningqiangzhao.study.widget.MyImageView
-            android:src="@drawable/img1"
-            android:id="@+id/is_left"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center_vertical" />
-
-        <com.example.ningqiangzhao.study.widget.MyViewPager
-            android:id="@+id/viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:clipChildren="false" />
-
-    </LinearLayout>
-
-  <com.example.ningqiangzhao.study.widget.MyTextView
-      android:id="@+id/textview"
-      android:text="上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理上的崩溃日志处理"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent" />
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="我是一个文本"
+        />
 
 </LinearLayout>
