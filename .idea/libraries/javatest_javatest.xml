@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="javatest.javatest">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/javatest/build/libs/javatest.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

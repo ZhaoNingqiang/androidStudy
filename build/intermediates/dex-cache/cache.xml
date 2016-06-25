@@ -21,15 +21,6 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/zhaoningqiang/Desktop/work/androidStudy/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="false"
-        revision="23.0.2"
-        sha1="1b8e03daaa43fb0a4cd57e378167c2fd70454c1e">
-        <dex dex="/Users/zhaoningqiang/Desktop/work/androidStudy/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.3.0_9412c6bc8e31c037ec98e8523d9ff4ac234f2d61.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/Users/zhaoningqiang/Desktop/work/androidStudy/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/classes.jar"
         jumboMode="false"
         optimize="false"
@@ -39,11 +30,20 @@
     </item>
     <item
         is-multidex="false"
+        jar="/Users/zhaoningqiang/Desktop/work/androidStudy/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="false"
+        revision="23.0.2"
+        sha1="1b8e03daaa43fb0a4cd57e378167c2fd70454c1e">
+        <dex dex="/Users/zhaoningqiang/Desktop/work/androidStudy/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.3.0_9412c6bc8e31c037ec98e8523d9ff4ac234f2d61.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/zhaoningqiang/Desktop/work/androidStudy/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="false"
         revision="23.0.2"
-        sha1="7c2a666ac01dcd63c91668f7da6065bc492d66b9">
+        sha1="fc200f51cab078b982fbb2604e4fd3089207cf07">
         <dex dex="/Users/zhaoningqiang/Desktop/work/androidStudy/app/build/intermediates/pre-dexed/debug/instant-run-bootstrap_035646b26f7be9e31ee4322f4bb12c7e6f992ebe.jar" />
     </item>
     <item
@@ -52,7 +52,7 @@
         jumboMode="true"
         optimize="false"
         revision="23.0.2"
-        sha1="c21b0d4159d5e67d0e7536ba76f9b3a8abfa7c52">
+        sha1="85061fa9104e3479c210ea8a66f3f05f9e2fe47c">
         <dex dex="/Users/zhaoningqiang/Desktop/work/androidStudy/app/build/intermediates/pre-dexed/debug/instant-run_bfada367dc95fe05ffbc0f6299e127bf689587a4.jar" />
     </item>
     <item
@@ -102,21 +102,21 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/zhaoningqiang/Desktop/work/androidStudy/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/libs/internal_impl-23.3.0.jar"
-        jumboMode="true"
-        optimize="false"
-        revision="23.0.2"
-        sha1="4da5a4d697d32497c6f85567a5112e62fdfd0676">
-        <dex dex="/Users/zhaoningqiang/Desktop/work/androidStudy/app/build/intermediates/pre-dexed/debug/internal_impl-23.3.0_7a4d845b794d6a2d3d231aff08196cf5ab6609a0.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/Users/zhaoningqiang/Desktop/work/androidStudy/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.3.0/jars/classes.jar"
         jumboMode="false"
         optimize="false"
         revision="23.0.2"
         sha1="a0b5d60246cd9d4f3f2443611b3b4c25265840b5">
         <dex dex="/Users/zhaoningqiang/Desktop/work/androidStudy/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-23.3.0_303536869fb49a101a89b7f00eed53cc2a6091eb.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/zhaoningqiang/Desktop/work/androidStudy/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/libs/internal_impl-23.3.0.jar"
+        jumboMode="true"
+        optimize="false"
+        revision="23.0.2"
+        sha1="4da5a4d697d32497c6f85567a5112e62fdfd0676">
+        <dex dex="/Users/zhaoningqiang/Desktop/work/androidStudy/app/build/intermediates/pre-dexed/debug/internal_impl-23.3.0_7a4d845b794d6a2d3d231aff08196cf5ab6609a0.jar" />
     </item>
     <item
         is-multidex="false"

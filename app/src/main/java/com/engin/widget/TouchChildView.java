@@ -29,5 +29,4 @@ public class TouchChildView extends TextView {
     public boolean onTouchEvent(MotionEvent event) {
         return super.onTouchEvent(event);
     }
-    onInt
 }
