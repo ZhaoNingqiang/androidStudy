@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.engin.R;
 import com.engin.cache.ImageCacheLoader;
 import com.engin.utils.LogUtil;
+import com.engin.widget.FixViewPager;
 import com.engin.widget.FloatCircleImageView;
 
 import java.util.ArrayList;
@@ -18,8 +19,8 @@ import java.util.ArrayList;
 
 public class FloatCircleActivity extends BaseActivity {
     FloatCircleImageView fiv;
-    ViewPager vp;
-    ArrayList<String> mUrls = new ArrayList<String>();
+    FixViewPager vp;
+    ArrayList<Struct> mUrls = new ArrayList<Struct>();
     @Override
     public int getLayout() {
         return R.layout.acitivty_float_circle_view;
@@ -28,15 +29,19 @@ public class FloatCircleActivity extends BaseActivity {
     @Override
     public void initView() {
         fiv = (FloatCircleImageView) findViewById(R.id.fiv);
-        vp = (ViewPager) findViewById(R.id.vp);
+        vp = (FixViewPager) findViewById(R.id.vp);
 
 
-        mUrls = new ArrayList<String>();
-        mUrls.add("http://img4.imgtn.bdimg.com/it/u=172112303,3232882607&fm=21&gp=0.jpg");
-        mUrls.add("http://img3.imgtn.bdimg.com/it/u=1876649012,2419765871&fm=21&gp=0.jpg");
-        mUrls.add("http://img4.imgtn.bdimg.com/it/u=3053650863,2902423685&fm=21&gp=0.jpg");
-        mUrls.add("http://www.guimobile.net/blog/uploads/2012/07/107141057.png");
-        mUrls.add("http://pic38.nipic.com/20140224/8472040_101914378000_2.jpg");
+        mUrls = new ArrayList<Struct>();
+
+
+
+
+        mUrls.add(new Struct("http://pic38.nipic.com/20140224/8472040_101914378000_2.jpg","-0-"));
+        mUrls.add(new Struct("http://img4.imgtn.bdimg.com/it/u=172112303,3232882607&fm=21&gp=0.jpg","-1-"));
+        mUrls.add(new Struct("http://img3.imgtn.bdimg.com/it/u=1876649012,2419765871&fm=21&gp=0.jpg","-2-"));
+        mUrls.add(new Struct("http://img4.imgtn.bdimg.com/it/u=3053650863,2902423685&fm=21&gp=0.jpg","-3-"));
+        mUrls.add(new Struct("http://www.guimobile.net/blog/uploads/2012/07/107141057.png","-4-"));
     }
 
     @Override
@@ -47,12 +52,15 @@ public class FloatCircleActivity extends BaseActivity {
         vp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                LogUtil.d("VP","onPageScrolled position = "+position+" positionOffset = "+positionOffset);
-                ImageCacheLoader.loadUpperLayerBitmap(mUrls.get(position%mUrls.size()),true,fiv);
+
+
+
+                LogUtil.d("VP","dddd onPageScrolled position = "+position+" positionOffset = "+positionOffset +"  positionOffsetPixels = "+positionOffsetPixels+" name = "+mUrls.get((position)%mUrls.size()).name);
+                ImageCacheLoader.loadUpperLayerBitmap(mUrls.get((position)%mUrls.size()).url,true,fiv);
                 if (position == 0){
-                    ImageCacheLoader.loadUpperLayerBitmap(mUrls.get(0),false,fiv);
+                    ImageCacheLoader.loadUpperLayerBitmap(mUrls.get(0).url,false,fiv);
                 }else {
-                    ImageCacheLoader.loadUpperLayerBitmap(mUrls.get((position-1)%mUrls.size()),false,fiv);
+                    ImageCacheLoader.loadUpperLayerBitmap(mUrls.get((position-1)%mUrls.size()).url,false,fiv);
                 }
                 fiv.update(positionOffset);
 
@@ -60,12 +68,18 @@ public class FloatCircleActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                LogUtil.d("VP","onPageSelected position = "+position);
+                LogUtil.d("VP","dddd onPageSelected position = "+position+" name = "+mUrls.get((position)%mUrls.size()).name);
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
 
+            }
+        });
+        vp.setPageTransformer(false, new ViewPager.PageTransformer() {
+            @Override
+            public void transformPage(View page, float position) {
+                LogUtil.d("VP","vvv page tag = "+((Struct)page.getTag()).name+"  position = "+position);
             }
         });
 
@@ -76,9 +90,9 @@ public class FloatCircleActivity extends BaseActivity {
 
     /****************************************/
     class VPAdapter extends PagerAdapter{
-        ArrayList<String> url = new ArrayList<String>();
+        ArrayList<Struct> url = new ArrayList<Struct>();
 
-        public VPAdapter(ArrayList<String> url) {
+        public VPAdapter(ArrayList<Struct> url) {
             this.url = url;
         }
 
@@ -94,10 +108,11 @@ public class FloatCircleActivity extends BaseActivity {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            String imageUrl = url.get((position+1) % url.size());
+            Struct struct = url.get((position+1) % url.size());
             FloatCircleImageView v = (FloatCircleImageView) View.inflate(FloatCircleActivity.this,R.layout.ui_page_item,null);
-            ImageCacheLoader.loadUpperLayerBitmap(imageUrl,false,v);
+            ImageCacheLoader.loadUpperLayerBitmap(struct.url,false,v);
             container.addView(v);
+            v.setTag(struct);
             return v;
         }
 
@@ -109,15 +124,18 @@ public class FloatCircleActivity extends BaseActivity {
 
         @Override
         public float getPageWidth(int position) {
-//            position = position % 3;
-//            float width = 0;
-//            if (position == 0){
-//                width = 0.34f;
-//            }else {
-//                width = 0.33f;
-//            }
-//            return width;
-            return .5f;
+           return 1/3f;
         }
+    }
+
+
+    class Struct{
+        public Struct(String url, String name) {
+            this.url = url;
+            this.name = name;
+        }
+
+        String url;
+        String name;
     }
 }
