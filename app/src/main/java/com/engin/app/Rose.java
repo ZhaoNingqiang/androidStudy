@@ -3,6 +3,8 @@ package com.engin.app;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
@@ -17,17 +19,32 @@ public class Rose extends Application {
 
     public static Context sContext;
     public static RequestQueue mRequestQueue;
+    public static int SCREEN_WIDTH;
+    public static int SCREEN_HEIGHT;
 
     @Override
     public void onCreate() {
         super.onCreate();
         sContext = getApplicationContext();
         mRequestQueue = Volley.newRequestQueue(sContext);
-        initImageLoader(getApplicationContext());
+        initUIParams();
     }
 
     public static Context getContext() {
         return sContext;
+    }
+
+    private void initUIParams() {
+        //获取屏幕尺寸
+        DisplayMetrics display = getApplicationContext().getResources().getDisplayMetrics();
+        SCREEN_WIDTH = display.widthPixels;// 设备的绝对宽度（px）
+        SCREEN_HEIGHT = display.heightPixels;
+        if (SCREEN_WIDTH > SCREEN_HEIGHT) {
+            int temp = SCREEN_WIDTH;
+            SCREEN_WIDTH = SCREEN_HEIGHT;
+            SCREEN_HEIGHT = temp;
+        }
+        float density = getResources().getDisplayMetrics().density;
     }
 
     // 初始化ImageLoader

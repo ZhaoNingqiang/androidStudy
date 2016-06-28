@@ -1,8 +1,10 @@
 package com.engin.activity;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import java.io.File;
 
@@ -27,6 +29,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     public abstract void initView();
 
     public abstract void setListener();
+
+    protected <T extends View> T findview(@IdRes int resId){
+        return (T)findViewById(resId);
+    }
 
 
 }

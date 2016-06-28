@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/androidStudy.iml" filepath="$PROJECT_DIR$/androidStudy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/androidStudy_new.iml" filepath="$PROJECT_DIR$/androidStudy_new.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/extra/extra.iml" filepath="$PROJECT_DIR$/extra/extra.iml" />
       <module fileurl="file://$PROJECT_DIR$/javatest/javatest.iml" filepath="$PROJECT_DIR$/javatest/javatest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/extra/volley/volley.iml" filepath="$PROJECT_DIR$/extra/volley/volley.iml" />
       <module fileurl="file://$PROJECT_DIR$/extra/volley/volley.iml" filepath="$PROJECT_DIR$/extra/volley/volley.iml" />
     </modules>
   </component>

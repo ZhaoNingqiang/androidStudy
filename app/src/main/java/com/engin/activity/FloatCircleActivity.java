@@ -1,7 +1,9 @@
 package com.engin.activity;
 
+import android.graphics.Bitmap;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -10,17 +12,22 @@ import com.engin.cache.ImageCacheLoader;
 import com.engin.utils.LogUtil;
 import com.engin.widget.FixViewPager;
 import com.engin.widget.FloatCircleImageView;
+import com.engin.widget.FloatSurfaceView;
+import com.engin.widget.LayerImageView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by zhaoningqiang on 16/6/25.
  */
 
 public class FloatCircleActivity extends BaseActivity {
-    FloatCircleImageView fiv;
+    LayerImageView fiv;
     FixViewPager vp;
     ArrayList<Struct> mUrls = new ArrayList<Struct>();
+
+    HashMap<String,Bitmap> bitmapHashMap = new HashMap<String,Bitmap>();
     @Override
     public int getLayout() {
         return R.layout.acitivty_float_circle_view;
@@ -28,14 +35,10 @@ public class FloatCircleActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        fiv = (FloatCircleImageView) findViewById(R.id.fiv);
+        fiv = (LayerImageView) findViewById(R.id.fiv);
         vp = (FixViewPager) findViewById(R.id.vp);
 
-
         mUrls = new ArrayList<Struct>();
-
-
-
 
         mUrls.add(new Struct("http://pic38.nipic.com/20140224/8472040_101914378000_2.jpg","-0-"));
         mUrls.add(new Struct("http://img4.imgtn.bdimg.com/it/u=172112303,3232882607&fm=21&gp=0.jpg","-1-"));
@@ -46,21 +49,23 @@ public class FloatCircleActivity extends BaseActivity {
 
     @Override
     public void setListener() {
-        VPAdapter adapter = new VPAdapter(mUrls);
+        VPAdapter adapter = new VPAdapter(mUrls,bitmapHashMap);
         vp.setAdapter(adapter);
 
         vp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            int mposition = -1;
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-
-
-                LogUtil.d("VP","dddd onPageScrolled position = "+position+" positionOffset = "+positionOffset +"  positionOffsetPixels = "+positionOffsetPixels+" name = "+mUrls.get((position)%mUrls.size()).name);
-                ImageCacheLoader.loadUpperLayerBitmap(mUrls.get((position)%mUrls.size()).url,true,fiv);
-                if (position == 0){
-                    ImageCacheLoader.loadUpperLayerBitmap(mUrls.get(0).url,false,fiv);
-                }else {
-                    ImageCacheLoader.loadUpperLayerBitmap(mUrls.get((position-1)%mUrls.size()).url,false,fiv);
+                if (mposition != position ){
+//                    LogUtil.d("VP","dddd onPageScrolled position = "+position+" positionOffset = "+positionOffset +"  positionOffsetPixels = "+positionOffsetPixels+" name = "+mUrls.get((position)%mUrls.size()).name);
+                    ImageCacheLoader.loadUpperLayerBitmap(mUrls.get((position+1)%mUrls.size()).url,true,fiv,bitmapHashMap);
+                    if (position == 0){
+                        ImageCacheLoader.loadUpperLayerBitmap(mUrls.get(0).url,false,fiv,bitmapHashMap);
+                    }else {
+                        ImageCacheLoader.loadUpperLayerBitmap(mUrls.get((position)%mUrls.size()).url,false,fiv,bitmapHashMap);
+                    }
+                    mposition = position;
                 }
                 fiv.update(positionOffset);
 
@@ -76,12 +81,6 @@ public class FloatCircleActivity extends BaseActivity {
 
             }
         });
-        vp.setPageTransformer(false, new ViewPager.PageTransformer() {
-            @Override
-            public void transformPage(View page, float position) {
-                LogUtil.d("VP","vvv page tag = "+((Struct)page.getTag()).name+"  position = "+position);
-            }
-        });
 
     }
 
@@ -90,10 +89,12 @@ public class FloatCircleActivity extends BaseActivity {
 
     /****************************************/
     class VPAdapter extends PagerAdapter{
+        HashMap<String,Bitmap> bitmapHashMap ;
         ArrayList<Struct> url = new ArrayList<Struct>();
 
-        public VPAdapter(ArrayList<Struct> url) {
+        public VPAdapter(ArrayList<Struct> url, HashMap<String,Bitmap> bitmapHashMap) {
             this.url = url;
+            this.bitmapHashMap = bitmapHashMap;
         }
 
         @Override
@@ -110,7 +111,7 @@ public class FloatCircleActivity extends BaseActivity {
         public Object instantiateItem(ViewGroup container, int position) {
             Struct struct = url.get((position+1) % url.size());
             FloatCircleImageView v = (FloatCircleImageView) View.inflate(FloatCircleActivity.this,R.layout.ui_page_item,null);
-            ImageCacheLoader.loadUpperLayerBitmap(struct.url,false,v);
+            ImageCacheLoader.loadUpperLayerBitmap(struct.url,false,v,bitmapHashMap);
             container.addView(v);
             v.setTag(struct);
             return v;

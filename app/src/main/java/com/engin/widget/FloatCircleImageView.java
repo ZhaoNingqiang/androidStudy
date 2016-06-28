@@ -3,6 +3,7 @@ package com.engin.widget;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
@@ -19,7 +20,6 @@ import android.widget.ImageView;
  */
 
 public class FloatCircleImageView extends ImageView {
-
     Paint mPaint = new Paint();
     Bitmap floatBitmap;
     Bitmap backBitmap;
@@ -49,12 +49,25 @@ public class FloatCircleImageView extends ImageView {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
     public void setUpperLayerBitmap(Bitmap bitmap){
+//        contentRect = new RectF(getPaddingLeft(),getPaddingTop(),getWidth() - getPaddingRight(),getHeight() - getPaddingBottom());
         floatBitmap = bitmap;
         floatShader = new BitmapShader(floatBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
         floatPaint.setShader(floatShader);
         updateFloatMatrix();
+        isDrawBitmap = true;
         invalidate();
+
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = false;
+
+        options.inSampleSize = floatBitmap.getWidth()/getWidth();
+
+
+
     }
+
+
     private void init(){
     }
 
@@ -120,21 +133,24 @@ public class FloatCircleImageView extends ImageView {
 
 
     public void update(float offset){
-        this.offset = 1.f - offset;
-        invalidate();
+        if (offset >=0 && offset <=1){
+            this.offset = 1.f - offset;
+//            invalidate();
+        }
+
     }
-    private float offset;
+    private volatile float offset;
+    private boolean isDrawBitmap = true;
 
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (floatBitmap != null){
-            canvas.save();
             canvas.translate(getWidth() * offset, 0);
-//        canvas.drawRect(contentRect,floatPaint);
-            canvas.drawBitmap(floatBitmap,null,contentRect,null);
-            canvas.restore();
-
+            //canvas.drawBitmap(floatBitmap, null, contentRect,null);
         }
+
+
+
 
 
 

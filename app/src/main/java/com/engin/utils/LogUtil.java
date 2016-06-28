@@ -15,13 +15,13 @@ public class LogUtil {
     static File outFile = new File("/Users/zhaoningqiang/Desktop/outLog/vlog.txt");
 
     static {
-        if (!outFile.exists()) {
-            try {
-                outFile.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        if (!outFile.exists()) {
+//            try {
+//                outFile.createNewFile();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     public static void writeToLocal(String tag, String log, boolean append) {
