@@ -77,7 +77,7 @@ public class LayerImageView extends FrameLayout {
 
     public void update(float offset){
         if (offset >=0 && offset <=1){
-            offset = 1.f - offset;
+            offset = 1.f - offset ;
             topImageView.setScrollX((int) (width * offset));
             invalidate();
         }

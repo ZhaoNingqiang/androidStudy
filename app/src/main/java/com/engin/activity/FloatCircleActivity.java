@@ -23,7 +23,7 @@ import java.util.HashMap;
  */
 
 public class FloatCircleActivity extends BaseActivity {
-    LayerImageView fiv;
+    FloatCircleImageView fiv;
     FixViewPager vp;
     ArrayList<Struct> mUrls = new ArrayList<Struct>();
 
@@ -35,7 +35,7 @@ public class FloatCircleActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        fiv = (LayerImageView) findViewById(R.id.fiv);
+        fiv = (FloatCircleImageView) findViewById(R.id.fiv);
         vp = (FixViewPager) findViewById(R.id.vp);
 
         mUrls = new ArrayList<Struct>();

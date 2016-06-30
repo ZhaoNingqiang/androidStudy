@@ -71,7 +71,7 @@ public class FloatViewActivity extends BaseActivity {
 
         @Override
         public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new Holder(View.inflate(FloatViewActivity.this, R.layout.activity_float_view, null));
+            return new Holder(View.inflate(FloatViewActivity.this, R.layout.ui_item_float_view, null));
         }
 
         @Override

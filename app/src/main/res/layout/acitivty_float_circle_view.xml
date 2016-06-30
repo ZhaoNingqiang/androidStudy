@@ -13,7 +13,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             >
-            <com.engin.widget.LayerImageView
+            <com.engin.widget.FloatCircleImageView
                 android:id="@+id/fiv"
                 android:layout_width="50dp"
                 android:layout_height="50dp"

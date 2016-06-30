@@ -16,6 +16,8 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.util.concurrent.locks.Lock;
+
 /**
  * @description: author:zhaoningqiang
  * @time 16/6/27/下午1:40
@@ -24,37 +26,35 @@ public class FloatSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     private static final String TAG = FloatSurfaceView.class.getSimpleName();
     private static final int SLEEP_TIME = 10;
 
-    Paint mPaint = new Paint();
-    Bitmap floatBitmap;
-    Bitmap backBitmap;
-    RectF contentRect;
-    Matrix floatMatrix = new Matrix();
-    Matrix backMatrix = new Matrix();
-    BitmapShader backShader;
-    BitmapShader floatShader;
+    private Paint mPathPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private Bitmap floatBitmap;
+    private Bitmap backBitmap;
+    private RectF contentRect;
 
-    Paint floatPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    Paint backPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private float offset;
+
+    private Path mPath = new Path();
 
     public FloatSurfaceView(Context context) {
         super(context);
+        init();
     }
 
     public FloatSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        getHolder().addCallback(this);
+        init();
     }
 
     public FloatSurfaceView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init();
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public FloatSurfaceView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-
-    }
-
+   private void init(){
+       getHolder().addCallback(this);
+       mPathPaint.setARGB(255,255,0,255);
+       mPathPaint.setStyle(Paint.Style.FILL);
+   }
 
     private final Object mSurfaceLock = new Object();
     private DrawThread mThread;
@@ -70,6 +70,9 @@ public class FloatSurfaceView extends SurfaceView implements SurfaceHolder.Callb
                                int height) {
         //这里可以获取SurfaceView的宽高等信息
         contentRect = new RectF(getPaddingLeft(),getPaddingTop(),width - getPaddingLeft() - getPaddingRight(),height - getPaddingTop() - getPaddingBottom());
+        mPath.addRect(contentRect, Path.Direction.CW);
+        mPath.addArc(contentRect,0,360);
+        mPath.setFillType(Path.FillType.EVEN_ODD);
     }
 
     @Override
@@ -80,6 +83,7 @@ public class FloatSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     }
 
     private class DrawThread extends Thread {
+
         private SurfaceHolder mHolder;
         private boolean mIsRun = false;
 
@@ -97,25 +101,30 @@ public class FloatSurfaceView extends SurfaceView implements SurfaceHolder.Callb
                     }
                     Canvas canvas = mHolder.lockCanvas();
                     if (canvas != null) {
-                       // doDraw(canvas);  //这里做真正绘制的事情
+                        //绘制底层图
+                        if (backBitmap != null){
+                            canvas.drawBitmap(backBitmap, null, contentRect,null);
+                        }
+
+                       //绘制浮层图
                         if (floatBitmap != null){
+                            canvas.save();
                             canvas.translate(getWidth() * offset, 0);
                             canvas.drawBitmap(floatBitmap, null, contentRect,null);
+                            canvas.restore();
                         }
 
 
-
-                        mPaint.setARGB(255,255,0,255);
-                        mPaint.setStyle(Paint.Style.FILL);
-                        RectF rectF = new RectF(getPaddingLeft(),getPaddingTop(),getWidth() - getPaddingRight(),getHeight() - getPaddingBottom());
-                        Path mPath = new Path();
-                        mPath.addRect(rectF, Path.Direction.CW);
-                        mPath.addArc(rectF,0,360);
-                        mPath.setFillType(Path.FillType.EVEN_ODD);
-                        canvas.drawPath(mPath,mPaint);
+                        //绘制中空圆
+                        canvas.drawPath(mPath,mPathPaint);
 
 
                        mHolder.unlockCanvasAndPost(canvas);
+                        try {
+                            wait();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
                 try {
@@ -138,36 +147,9 @@ public class FloatSurfaceView extends SurfaceView implements SurfaceHolder.Callb
 
     public void setUpperLayerBitmap(Bitmap bitmap){
         floatBitmap = bitmap;
-        floatShader = new BitmapShader(floatBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-        floatPaint.setShader(floatShader);
-        updateFloatMatrix();
-        invalidate();
     }
 
 
-    private void updateFloatMatrix() {
-        float scale;
-        float dx = 0;
-        float dy = 0;
-
-        floatMatrix.set(null);
-
-        int bitmapWidth =  floatBitmap.getWidth();
-        int bitmapHeight = floatBitmap.getHeight();
-
-        if (bitmapWidth * contentRect.height() > contentRect.width() * bitmapHeight) {
-            scale = contentRect.height() / (float) bitmapHeight;
-            dx = (contentRect.width() - bitmapWidth * scale) * 0.5f;
-        } else {
-            scale = contentRect.width() / (float) bitmapWidth;
-            dy = (contentRect.height() - bitmapHeight * scale) * 0.5f;
-        }
-
-        floatMatrix.setScale(scale, scale);
-        floatMatrix.postTranslate((int) (dx + 0.5f), (int) (dy + 0.5f));
-
-        floatShader.setLocalMatrix(floatMatrix);
-    }
 
     public void update(float offset){
         if (offset >=0 && offset <=1){
@@ -175,5 +157,5 @@ public class FloatSurfaceView extends SurfaceView implements SurfaceHolder.Callb
             invalidate();
         }
     }
-    private float offset;
+
 }
