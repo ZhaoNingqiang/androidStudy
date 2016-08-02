@@ -1,1 +1,1 @@
-include ':app', ':javatest',':extra:volley'
+include ':app', ':javatest', ':extra:volley', ':local'
